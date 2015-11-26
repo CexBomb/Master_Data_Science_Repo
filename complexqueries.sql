@@ -76,3 +76,8 @@ HAVING COUNT(*) >= 3
 LIMIT 10;
 
 --Contar el número de ciudades de los paises que estén por encima de la -- --media de su país
+
+bzcat optd_backup.sql.bz2|psql optd_backup 
+pg_dump optd | bzip2 -9 > optd_backup.sql.bz2 
+--Copiar los datos del CSV sin cabecera
+optd# copy optd_aircraft from '/tmp/optd_aircraft.csv' delimiter '^' csv header; 
