@@ -1,0 +1,20 @@
+Ejercicios CSVKit
+1:
+csvlook -d '^' optd_aircraft.csv | head -n 2
+2:
+csvstat -d '^' optd_aircraft.csv -c manufacturer
+3:
+csvcut -d '^' -c manufacturer optd_aircraft.csv | uniq -c | sort -n -r | head -n 10
+4:
+csvcut -d '^' -c manufacturer optd_aircraft.csv | sort -n -r | wc -l
+5:
+csvgrep -d '^' optd_aircraft.csv -c manufacturer -m Airbus | csvlook
+6:
+csvgrep -d '^' optd_aircraft.csv -c manufacturer -m Airbus |csvcut -c nb_engines,manufacturer,model|sort -r -n|csvlook 
+6b:
+csvcut -d '^' optd_aircraft.csv -c nb_engines,manufacturer,model|sort -r -n|csvlook 
+
+10:
+bzip2 -9 optd_por_public.csv
+10b:
+bzcat optd_por_public.csv.bz2|grep MAD
