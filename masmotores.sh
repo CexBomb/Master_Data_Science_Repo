@@ -1,2 +1,3 @@
 #! /bin/bash
-csvcut -d '^' $1 -c nb_engines,manufacturer,model|sort -r -n|head -n 1|csvlook 
+FILENAME=$1
+csvcut -d '^' $FILENAME -c nb_engines,manufacturer,model|sort -r -n|head -n 1|csvlook 
