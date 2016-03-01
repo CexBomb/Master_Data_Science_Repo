@@ -1,7 +1,0 @@
-mkdir -p ~/dir1/dir2/dir3 : crea los tres directorios
-find . -mmin -30 : busca todos los archivos modificados en los últimos 30 minutos
-less -S : para buscar dentro tecleo / y lo que quiero buscar
-~.history guarda el historial
-zless On_Time_On_Time_Performance_2015_1.zip | head -1 | tr ',' '\n' : Listado de todas las columnas del fichero
-
-zcat On_Time_On_Time_Performance_2015_1.zip | tr ',' '\n' | grep "[Aa][ei]r" | uniq | less: Búsqueda de la expresion regular  [Aa][ei]r
