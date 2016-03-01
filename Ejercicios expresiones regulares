@@ -1,6 +1,0 @@
-1:
-cat optd_aircraft.csv|tr '^' '\t' |grep -E "(7.7|Airbus.A3..)"|less -S 
-2:
-cat optd_airlines.csv|cut -d '^' -f8|grep -E "(\b[Aa]ir(lines)?\b|\baero)"
-3:
-cat optd_airlines.csv|grep -E "19([0-6][0-9]|70)-"|wc -l 
