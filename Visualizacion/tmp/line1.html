@@ -1,0 +1,204 @@
+<!--
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+</style>
+<body>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var formatDate = d3.time.format("%Y%m%d");
+
+var x = d3.time.scale()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var line = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.close); });
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+
+var process = function(error, data) {
+  if (error) throw error;
+
+  x.domain(d3.extent(data, function(d) { return d.date; }));
+  y.domain(d3.extent(data, function(d) { return d.close; }));
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Price ($)");
+
+  svg.append("path")
+      .datum(data)
+      .attr("class", "line")
+      .attr("d", line);
+};
+
+
+function type(d) {
+  d.date = formatDate.parse(d.date);
+  d.close = +d.close;
+  return d;
+};
+
+//d3.tsv("data.tsv", type, process);
+var data = [{"date":20160101,"close":10.6,"city":"Madrid"},{"date":20160102,"close":9.1,"city":"Madrid"},{"date":20160103,"close":6.8,"city":"Madrid"},{"date":20160104,"close":12.7,"city":"Madrid"},{"date":20160105,"close":7.9,"city":"Madrid"},{"date":20160106,"close":5.7,"city":"Madrid"},{"date":20160107,"close":12.8,"city":"Madrid"},{"date":20160108,"close":12.2,"city":"Madrid"},{"date":20160109,"close":10.3,"city":"Madrid"},{"date":20160110,"close":11.1,"city":"Madrid"},{"date":20160111,"close":9.9,"city":"Madrid"},{"date":20160112,"close":7.0,"city":"Madrid"},{"date":20160113,"close":4.1,"city":"Madrid"},{"date":20160114,"close":4.7,"city":"Madrid"},{"date":20160115,"close":7.0,"city":"Madrid"},{"date":20160116,"close":4.6,"city":"Madrid"},{"date":20160117,"close":1.6,"city":"Madrid"},{"date":20160118,"close":6.5,"city":"Madrid"},{"date":20160119,"close":5.0,"city":"Madrid"},{"date":20160120,"close":4.8,"city":"Madrid"},{"date":20160121,"close":5.8,"city":"Madrid"},{"date":20160122,"close":8.3,"city":"Madrid"},{"date":20160123,"close":11.3,"city":"Madrid"},{"date":20160124,"close":10.2,"city":"Madrid"},{"date":20160125,"close":9.6,"city":"Madrid"},{"date":20160126,"close":8.9,"city":"Madrid"},{"date":20160127,"close":8.4,"city":"Madrid"},{"date":20160128,"close":8.1,"city":"Madrid"},{"date":20160129,"close":8.2,"city":"Madrid"},{"date":20160130,"close":7.8,"city":"Madrid"},{"date":20160131,"close":8.6,"city":"Madrid"},{"date":20160201,"close":8.8,"city":"Madrid"},{"date":20160202,"close":7.2,"city":"Madrid"},{"date":20160203,"close":8.8,"city":"Madrid"},{"date":20160204,"close":5.8,"city":"Madrid"},{"date":20160205,"close":4.3,"city":"Madrid"},{"date":20160206,"close":5.7,"city":"Madrid"},{"date":20160207,"close":7.9,"city":"Madrid"},{"date":20160208,"close":9.3,"city":"Madrid"},{"date":20160209,"close":11.3,"city":"Madrid"},{"date":20160210,"close":12.4,"city":"Madrid"},{"date":20160211,"close":13.4,"city":"Madrid"},{"date":20160212,"close":12.2,"city":"Madrid"},{"date":20160213,"close":13.6,"city":"Madrid"},{"date":20160214,"close":8.4,"city":"Madrid"},{"date":20160215,"close":5.4,"city":"Madrid"},{"date":20160216,"close":3.8,"city":"Madrid"},{"date":20160217,"close":2.4,"city":"Madrid"},{"date":20160218,"close":5.6,"city":"Madrid"},{"date":20160219,"close":5.2,"city":"Madrid"},{"date":20160220,"close":5.3,"city":"Madrid"},{"date":20160221,"close":6.6,"city":"Madrid"},{"date":20160222,"close":8.3,"city":"Madrid"},{"date":20160223,"close":8.3,"city":"Madrid"},{"date":20160224,"close":6.1,"city":"Madrid"},{"date":20160225,"close":8.8,"city":"Madrid"},{"date":20160226,"close":6.4,"city":"Madrid"},{"date":20160227,"close":5.7,"city":"Madrid"},{"date":20160228,"close":7.2,"city":"Madrid"},{"date":20160229,"close":7.9,"city":"Madrid"},{"date":20160301,"close":7.6,"city":"Madrid"},{"date":20160302,"close":9.3,"city":"Madrid"},{"date":20160303,"close":9.2,"city":"Madrid"},{"date":20160304,"close":8.3,"city":"Madrid"},{"date":20160305,"close":6.8,"city":"Madrid"},{"date":20160306,"close":6.6,"city":"Madrid"},{"date":20160307,"close":7.4,"city":"Madrid"},{"date":20160308,"close":6.9,"city":"Madrid"},{"date":20160309,"close":5.3,"city":"Madrid"},{"date":20160311,"close":8.1,"city":"Madrid"},{"date":20160312,"close":6.4,"city":"Madrid"},{"date":20160313,"close":8.0,"city":"Madrid"},{"date":20160314,"close":7.2,"city":"Madrid"},{"date":20160315,"close":7.2,"city":"Madrid"},{"date":20160316,"close":7.6,"city":"Madrid"},{"date":20160317,"close":9.2,"city":"Madrid"},{"date":20160318,"close":8.4,"city":"Madrid"},{"date":20160319,"close":9.8,"city":"Madrid"},{"date":20160320,"close":8.3,"city":"Madrid"},{"date":20160321,"close":9.1,"city":"Madrid"},{"date":20160322,"close":10.0,"city":"Madrid"},{"date":20160323,"close":8.4,"city":"Madrid"},{"date":20160324,"close":9.9,"city":"Madrid"},{"date":20160325,"close":10.2,"city":"Madrid"},{"date":20160326,"close":10.3,"city":"Madrid"},{"date":20160327,"close":12.1,"city":"Madrid"},{"date":20160328,"close":11.1,"city":"Madrid"},{"date":20160329,"close":13.6,"city":"Madrid"},{"date":20160330,"close":13.9,"city":"Madrid"},{"date":20160331,"close":9.2,"city":"Madrid"},{"date":20160401,"close":8.2,"city":"Madrid"},{"date":20160402,"close":9.3,"city":"Madrid"},{"date":20160403,"close":10.8,"city":"Madrid"},{"date":20160404,"close":8.3,"city":"Madrid"},{"date":20160405,"close":10.9,"city":"Madrid"},{"date":20160406,"close":11.9,"city":"Madrid"},{"date":20160407,"close":12.3,"city":"Madrid"},{"date":20160408,"close":9.4,"city":"Madrid"},{"date":20160409,"close":10.9,"city":"Madrid"},{"date":20160410,"close":10.4,"city":"Madrid"},{"date":20160411,"close":8.9,"city":"Madrid"}]
+process = ("",data)
+
+</script>
+
+-->
+
+<meta charset="utf-8">
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+</style>
+<body>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script>
+
+var margin = {top: 20, right: 20, bottom: 30, left: 50},
+    width = 700 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+var formatDate = d3.time.format("%Y%m%d");
+
+var x = d3.time.scale()
+    .range([0, width]);
+
+var y = d3.scale.linear()
+    .range([height, 0]);
+
+var xAxis = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left");
+
+var line = d3.svg.line()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.close); });
+
+var svg = d3.select("body").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    
+var process = function(error, data) {
+  if (error) throw error;
+    
+    data = data.map(type)
+    
+  x.domain(d3.extent(data, function(d) { return d.date; }));
+  y.domain(d3.extent(data, function(d) { return d.close; }));
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Temperature");
+
+  svg.append("path")
+      .datum(data)
+      .attr("class", "line")
+      .attr("d", line);
+}
+    
+
+var data = [{"date":20160101,"close":10.6,"city":"Madrid"},{"date":20160102,"close":9.1,"city":"Madrid"},{"date":20160103,"close":6.8,"city":"Madrid"},{"date":20160104,"close":12.7,"city":"Madrid"},{"date":20160105,"close":7.9,"city":"Madrid"},{"date":20160106,"close":5.7,"city":"Madrid"},{"date":20160107,"close":12.8,"city":"Madrid"},{"date":20160108,"close":12.2,"city":"Madrid"},{"date":20160109,"close":10.3,"city":"Madrid"},{"date":20160110,"close":11.1,"city":"Madrid"},{"date":20160111,"close":9.9,"city":"Madrid"},{"date":20160112,"close":7.0,"city":"Madrid"},{"date":20160113,"close":4.1,"city":"Madrid"},{"date":20160114,"close":4.7,"city":"Madrid"},{"date":20160115,"close":7.0,"city":"Madrid"},{"date":20160116,"close":4.6,"city":"Madrid"},{"date":20160117,"close":1.6,"city":"Madrid"},{"date":20160118,"close":6.5,"city":"Madrid"},{"date":20160119,"close":5.0,"city":"Madrid"},{"date":20160120,"close":4.8,"city":"Madrid"},{"date":20160121,"close":5.8,"city":"Madrid"},{"date":20160122,"close":8.3,"city":"Madrid"},{"date":20160123,"close":11.3,"city":"Madrid"},{"date":20160124,"close":10.2,"city":"Madrid"},{"date":20160125,"close":9.6,"city":"Madrid"},{"date":20160126,"close":8.9,"city":"Madrid"},{"date":20160127,"close":8.4,"city":"Madrid"},{"date":20160128,"close":8.1,"city":"Madrid"},{"date":20160129,"close":8.2,"city":"Madrid"},{"date":20160130,"close":7.8,"city":"Madrid"},{"date":20160131,"close":8.6,"city":"Madrid"},{"date":20160201,"close":8.8,"city":"Madrid"},{"date":20160202,"close":7.2,"city":"Madrid"},{"date":20160203,"close":8.8,"city":"Madrid"},{"date":20160204,"close":5.8,"city":"Madrid"},{"date":20160205,"close":4.3,"city":"Madrid"},{"date":20160206,"close":5.7,"city":"Madrid"},{"date":20160207,"close":7.9,"city":"Madrid"},{"date":20160208,"close":9.3,"city":"Madrid"},{"date":20160209,"close":11.3,"city":"Madrid"},{"date":20160210,"close":12.4,"city":"Madrid"},{"date":20160211,"close":13.4,"city":"Madrid"},{"date":20160212,"close":12.2,"city":"Madrid"},{"date":20160213,"close":13.6,"city":"Madrid"},{"date":20160214,"close":8.4,"city":"Madrid"},{"date":20160215,"close":5.4,"city":"Madrid"},{"date":20160216,"close":3.8,"city":"Madrid"},{"date":20160217,"close":2.4,"city":"Madrid"},{"date":20160218,"close":5.6,"city":"Madrid"},{"date":20160219,"close":5.2,"city":"Madrid"},{"date":20160220,"close":5.3,"city":"Madrid"},{"date":20160221,"close":6.6,"city":"Madrid"},{"date":20160222,"close":8.3,"city":"Madrid"},{"date":20160223,"close":8.3,"city":"Madrid"},{"date":20160224,"close":6.1,"city":"Madrid"},{"date":20160225,"close":8.8,"city":"Madrid"},{"date":20160226,"close":6.4,"city":"Madrid"},{"date":20160227,"close":5.7,"city":"Madrid"},{"date":20160228,"close":7.2,"city":"Madrid"},{"date":20160229,"close":7.9,"city":"Madrid"},{"date":20160301,"close":7.6,"city":"Madrid"},{"date":20160302,"close":9.3,"city":"Madrid"},{"date":20160303,"close":9.2,"city":"Madrid"},{"date":20160304,"close":8.3,"city":"Madrid"},{"date":20160305,"close":6.8,"city":"Madrid"},{"date":20160306,"close":6.6,"city":"Madrid"},{"date":20160307,"close":7.4,"city":"Madrid"},{"date":20160308,"close":6.9,"city":"Madrid"},{"date":20160309,"close":5.3,"city":"Madrid"},{"date":20160311,"close":8.1,"city":"Madrid"},{"date":20160312,"close":6.4,"city":"Madrid"},{"date":20160313,"close":8.0,"city":"Madrid"},{"date":20160314,"close":7.2,"city":"Madrid"},{"date":20160315,"close":7.2,"city":"Madrid"},{"date":20160316,"close":7.6,"city":"Madrid"},{"date":20160317,"close":9.2,"city":"Madrid"},{"date":20160318,"close":8.4,"city":"Madrid"},{"date":20160319,"close":9.8,"city":"Madrid"},{"date":20160320,"close":8.3,"city":"Madrid"},{"date":20160321,"close":9.1,"city":"Madrid"},{"date":20160322,"close":10.0,"city":"Madrid"},{"date":20160323,"close":8.4,"city":"Madrid"},{"date":20160324,"close":9.9,"city":"Madrid"},{"date":20160325,"close":10.2,"city":"Madrid"},{"date":20160326,"close":10.3,"city":"Madrid"},{"date":20160327,"close":12.1,"city":"Madrid"},{"date":20160328,"close":11.1,"city":"Madrid"},{"date":20160329,"close":13.6,"city":"Madrid"},{"date":20160330,"close":13.9,"city":"Madrid"},{"date":20160331,"close":9.2,"city":"Madrid"},{"date":20160401,"close":8.2,"city":"Madrid"},{"date":20160402,"close":9.3,"city":"Madrid"},{"date":20160403,"close":10.8,"city":"Madrid"},{"date":20160404,"close":8.3,"city":"Madrid"},{"date":20160405,"close":10.9,"city":"Madrid"},{"date":20160406,"close":11.9,"city":"Madrid"},{"date":20160407,"close":12.3,"city":"Madrid"},{"date":20160408,"close":9.4,"city":"Madrid"},{"date":20160409,"close":10.9,"city":"Madrid"},{"date":20160410,"close":10.4,"city":"Madrid"},{"date":20160411,"close":8.9,"city":"Madrid"}]
+process("",data)
+
+function type(d) {
+  d.date = formatDate.parse(""+d.date);
+  d.close = +d.close;
+  return d;
+}
+
+</script>

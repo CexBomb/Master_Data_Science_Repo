@@ -1,0 +1,29 @@
+<html>
+    <head></head>
+    <body>
+        <style>
+            .bar {
+                background-color:blue;
+            }
+        </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
+        <script>
+            var list = [4,8,15,16,23,42];
+            
+            var body = d3.select("body")
+                        .style("background-color","black")
+            
+            /*var container = body.append("div")
+                        .style("background-color","blue")
+                        .style("width",100)
+                        .style("height",200)*/
+            
+            list.forEach(function(v,i,a){
+                body.append("div")
+                        .style("background-color","blue")
+                        .style("width",v)
+                        .style("height",20)
+            })
+        </script>
+    </body>
+</html>

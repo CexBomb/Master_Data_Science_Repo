@@ -1,0 +1,42 @@
+<html>
+    <head></head>
+    <body>
+        <style>
+            .bar {
+                fill:blue;
+            }
+        </style>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
+        <script>
+            var list = [4, 6, 90, 89, 100];
+            
+            var minL = d3.min(list)
+            var maxL = d3.max(list)
+            var xscale = d3.scale.linear()
+                            .range([0,300])
+                            .domain([minL,maxL])
+            
+            var svg = d3.select("body").append("svg")
+            
+            var d3join = svg.selectAll("rect").data(list)
+            
+            d3join.enter()
+                .append("rect")
+                .attr("class","bar")
+                .attr("x",20)
+                .attr("height",20)
+                .attr("y",function(d,i) {return i*25})
+                .attr("width",function(d){return xscale(d)})
+            
+            var d3join = svg.selectAll("text").data(list)
+            d3join.enter()
+                .append("text")
+                .attr("x",20)
+                .attr("y",function(d,i) {return i*25+15})
+                .text(function(d,i){return i})
+                .attr("fill","white")
+
+        </script>
+    </body>
+</html>

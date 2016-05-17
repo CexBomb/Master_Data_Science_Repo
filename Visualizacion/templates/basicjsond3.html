@@ -1,0 +1,15 @@
+<html>
+    <head>
+    </head>
+    <body>
+        <script src="//d3js.org/d3.v3.min.js"></script>
+        <script>
+            
+            var process = function (error,data){
+                    console.log(data)
+                }
+        
+            d3.json("http://localhost:8080/api/v1/temp?code=MAD",process)
+        </script>
+    </body>
+</html>

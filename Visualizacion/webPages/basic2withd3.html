@@ -1,0 +1,29 @@
+<html>
+    <head></head>
+    <body>
+        <style>
+            .bar {
+                background-color:blue;
+                color:white;
+            }
+        </style>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.16/d3.min.js"></script>
+        <script>
+            var list = [4,8,15,16,23,42];
+            
+            var body = d3.select("body")
+                        .style("background-color","black")
+            
+            var d3join = d3.select("body").selectAll(".bar").data(list)
+            
+            d3join.enter()
+                .append("div")
+                .attr("class","bar")
+                .style("width",function(d){ return 6*d })
+                .style("height",20)
+                .text(function(d){return d})
+
+        </script>
+    </body>
+</html>
